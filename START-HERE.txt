@@ -1,0 +1,13 @@
+BLUEPRINT 3D STUDIO v0.13.0
+
+1. Double-click INSTALL.bat and wait until it says installation is complete.
+2. Double-click RUN.bat.
+3. Your browser opens automatically. Keep the black Node window open while you work.
+
+For future use, you only need to double-click RUN.bat.
+
+NEW IN v0.13.0
+- 82 detailed editable objects in 14 categories.
+- 20 distinct kitchen cabinet modules with fronts, drawers, hardware and Smart Snap.
+- 16 procedural floor finishes.
+- No current catalog object uses the old generic cube fallback.
