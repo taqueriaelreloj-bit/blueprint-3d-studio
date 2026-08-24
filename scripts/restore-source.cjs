@@ -32,7 +32,7 @@ function restore(prefix, outputName) {
 
 try {
   restore('App.jsx.br.b64.part', 'App.jsx');
-  restore('styles.css.br.b64.part', 'styles.css');
+  restore('styles2.css.br.b64.part', 'styles.css');
   console.log('Blueprint 3D Studio source restoration complete.');
 } catch (error) {
   console.error('SOURCE RESTORE FAILED:', error.message);
