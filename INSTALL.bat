@@ -1,5 +1,5 @@
 @echo off
-title Blueprint 3D Studio v0.13.0 - Install
+title Blueprint 3D Studio v0.14.0 - Install
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -33,6 +33,6 @@ if errorlevel 1 (
 )
 
 echo.
-echo Installation complete. Blueprint 3D Studio v0.13.0 is ready.
+echo Installation complete. Blueprint 3D Studio v0.14.0 is ready.
 echo Double-click RUN.bat to start the program.
 pause
