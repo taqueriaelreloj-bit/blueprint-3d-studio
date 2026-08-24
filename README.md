@@ -4,17 +4,18 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.14.0**
+**v0.15.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies the checked-in v0.14 upgrade.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies the checked-in v0.14 and v0.15 upgrades.
 
-### v0.14 highlights
+### v0.15 highlights
 
-- Detects and strengthens all blueprint lines before structural classification.
-- Lets you show/hide the complete detected-line overlay during wall review.
-- Keeps dimension/annotation geometry visible for review without converting it into 3D walls.
-- Adds a dedicated editable 16 ft double garage door to Architecture > Doors.
-- Keeps global Undo/Redo, multi-level editing, AI wall classification, AI kitchen layout, room furnishing and 2D/3D views from v0.13.
+- Keeps the v0.14 detect-and-strengthen-all-lines workflow before wall classification.
+- Keeps dimension and annotation lines visible for review without turning them into structural 3D walls.
+- Adds the editable 16 ft double garage door to Architecture > Doors.
+- Renders the garage opening in 3D as a sectional overhead door instead of a generic hinged slab.
+- Preserves continuous wall material above doors and windows in the generated 3D wall geometry.
+- Keeps project-wide Undo/Redo, multi-level editing, AI wall classification, AI kitchen layout, room furnishing and 2D/3D views.
 
 ## Windows quick start
 
@@ -22,7 +23,7 @@ The recovered v0.13 application source is preserved in `src/source/` as verified
 2. Double-click `INSTALL.bat` once.
 3. Double-click `RUN.bat` whenever you want to launch Blueprint 3D Studio.
 
-`RUN.bat` restores the canonical source and applies the latest upgrade before starting Vite.
+`RUN.bat` restores the canonical source and applies the latest upgrades before starting Vite.
 
 ## Development
 
@@ -45,7 +46,8 @@ npm run build
 - `src/styles.css` — reconstructed and upgraded automatically
 - `src/source/` — canonical recovered v0.13 source chunks
 - `scripts/restore-source.cjs` — source reconstruction utility
-- `scripts/upgrade-v014.cjs` — v0.14 application upgrade
+- `scripts/upgrade-v014.cjs` — detected-line and garage catalog upgrade
+- `scripts/upgrade-v015.cjs` — sectional garage-door 3D upgrade
 - `INSTALL.bat` — Windows setup
 - `RUN.bat` — Windows launcher
 
