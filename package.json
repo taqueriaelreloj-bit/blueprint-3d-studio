@@ -1,0 +1,23 @@
+{
+  "name": "blueprint-3d-studio",
+  "private": true,
+  "version": "0.13.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.7.0",
+    "pdfjs-dist": "^5.4.54",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite": "^7.1.3"
+  }
+}
