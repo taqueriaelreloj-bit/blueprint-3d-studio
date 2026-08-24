@@ -1,5 +1,5 @@
 @echo off
-title Blueprint 3D Studio v0.14.0 - Run
+title Blueprint 3D Studio v0.15.0 - Run
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -33,7 +33,7 @@ if not exist node_modules (
   )
 )
 
-echo Starting Blueprint 3D Studio v0.14.0...
+echo Starting Blueprint 3D Studio v0.15.0...
 echo Keep this window open while using the application.
 call npm run dev -- --open
 pause
