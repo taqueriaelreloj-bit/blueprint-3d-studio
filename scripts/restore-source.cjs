@@ -33,6 +33,7 @@ function restore(prefix, outputName) {
 try {
   restore('App.jsx.br.b64.part', 'App.jsx');
   restore('styles2.css.br.b64.part', 'styles.css');
+  require('./upgrade-v014.cjs');
   console.log('Blueprint 3D Studio source restoration complete.');
 } catch (error) {
   console.error('SOURCE RESTORE FAILED:', error.message);
