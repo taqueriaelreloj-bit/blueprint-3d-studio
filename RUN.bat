@@ -1,5 +1,5 @@
 @echo off
-title Blueprint 3D Studio v0.15.0 - Run
+title Blueprint 3D Studio v0.16.0 - Run
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -23,6 +23,14 @@ if errorlevel 1 (
   exit /b 1
 )
 
+echo Validating Blueprint 3D Studio source...
+node scripts\validate-source.cjs
+if errorlevel 1 (
+  echo Source validation failed. Review the error above.
+  pause
+  exit /b 1
+)
+
 if not exist node_modules (
   echo Dependencies are missing. Installing them now...
   call npm install
@@ -33,7 +41,7 @@ if not exist node_modules (
   )
 )
 
-echo Starting Blueprint 3D Studio v0.15.0...
+echo Starting Blueprint 3D Studio v0.16.0...
 echo Keep this window open while using the application.
 call npm run dev -- --open
 pause
