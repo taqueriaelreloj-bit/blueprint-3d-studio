@@ -35,6 +35,7 @@ try {
   restore('styles2.css.br.b64.part', 'styles.css');
   require('./upgrade-v014.cjs');
   require('./upgrade-v015.cjs');
+  require('./upgrade-v016.cjs');
   console.log('Blueprint 3D Studio source restoration complete.');
 } catch (error) {
   console.error('SOURCE RESTORE FAILED:', error.message);
