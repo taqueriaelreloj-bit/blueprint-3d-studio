@@ -1,6 +1,7 @@
 @echo off
-title Blueprint 3D Studio - Install
+title Blueprint 3D Studio v0.13.0 - Install
 cd /d "%~dp0"
+
 where node >nul 2>nul
 if errorlevel 1 (
   echo Node.js is not installed or is not available in PATH.
@@ -8,6 +9,21 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+
+if not exist package.json (
+  echo ERROR: package.json was not found.
+  pause
+  exit /b 1
+)
+
+echo Restoring Blueprint 3D Studio source files...
+node scripts\restore-source.cjs
+if errorlevel 1 (
+  echo Source restoration failed. Review the error above.
+  pause
+  exit /b 1
+)
+
 echo Installing Blueprint 3D Studio dependencies...
 call npm install
 if errorlevel 1 (
@@ -15,5 +31,8 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo Installation complete. You can now double-click RUN.bat.
+
+echo.
+echo Installation complete. Blueprint 3D Studio v0.13.0 is ready.
+echo Double-click RUN.bat to start the program.
 pause
