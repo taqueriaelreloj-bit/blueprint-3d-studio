@@ -1,5 +1,5 @@
 @echo off
-title Blueprint 3D Studio v0.15.0 - Install
+title Blueprint 3D Studio v0.16.0 - Install
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -24,6 +24,14 @@ if errorlevel 1 (
   exit /b 1
 )
 
+echo Validating Blueprint 3D Studio source...
+node scripts\validate-source.cjs
+if errorlevel 1 (
+  echo Source validation failed. Review the error above.
+  pause
+  exit /b 1
+)
+
 echo Installing Blueprint 3D Studio dependencies...
 call npm install
 if errorlevel 1 (
@@ -33,6 +41,6 @@ if errorlevel 1 (
 )
 
 echo.
-echo Installation complete. Blueprint 3D Studio v0.15.0 is ready.
+echo Installation complete. Blueprint 3D Studio v0.16.0 is ready.
 echo Double-click RUN.bat to start the program.
 pause
