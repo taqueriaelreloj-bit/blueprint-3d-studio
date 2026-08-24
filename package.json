@@ -1,9 +1,11 @@
 {
   "name": "blueprint-3d-studio",
   "private": true,
-  "version": "0.15.0",
+  "version": "0.16.0",
   "type": "module",
   "scripts": {
+    "restore": "node scripts/restore-source.cjs",
+    "validate": "node scripts/validate-source.cjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
