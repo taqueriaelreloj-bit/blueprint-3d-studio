@@ -1,5 +1,5 @@
 @echo off
-title Blueprint 3D Studio v0.16.0 - Run
+title Blueprint 3D Studio v0.17.0 - Run
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -55,8 +55,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo Build passed. Starting stable production preview...
-echo This mode bypasses Vite dev dependency optimization and stale 504 errors.
+echo Build passed. Starting Blueprint 3D Studio v0.17.0 stable preview...
 echo Keep this window open while using the application.
 call npm run preview -- --host 127.0.0.1 --port 5173 --strictPort --open
 pause
