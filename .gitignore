@@ -3,3 +3,8 @@ dist/
 .vite/
 *.log
 .DS_Store
+
+# Reconstructed/generated runtime files. Canonical source is stored in src/source/.
+src/App.jsx
+src/styles.css
+package-lock.json
