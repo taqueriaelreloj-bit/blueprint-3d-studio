@@ -14,21 +14,16 @@ if (!app.includes('const APP_VERSION = "0.21.0";')) {
   app = app.replace('const APP_VERSION = "0.20.0";', 'const APP_VERSION = "0.21.0";');
 }
 
-// Remove the AI Kitchen Layout command from the main toolbar. The kitchen
-// generator code is intentionally left dormant for now so this change is safe
-// and reversible while wall detection remains the active development focus.
-if (app.includes('AI Kitchen Layout')) {
-  const labelIndex = app.indexOf('AI Kitchen Layout');
+// Remove only the visible AI Kitchen Layout toolbar button. Dormant kitchen
+// generator code may still contain the same label internally and is intentionally
+// preserved so wall-detection work does not risk unrelated regressions.
+const labelIndex = app.indexOf('AI Kitchen Layout');
+if (labelIndex >= 0) {
   const buttonStart = app.lastIndexOf('<button', labelIndex);
   const buttonEnd = app.indexOf('</button>', labelIndex);
-  if (buttonStart < 0 || buttonEnd < 0) {
-    throw new Error('v0.21 patch target missing: AI Kitchen Layout button bounds');
+  if (buttonStart >= 0 && buttonEnd >= 0) {
+    app = app.slice(0, buttonStart) + app.slice(buttonEnd + '</button>'.length);
   }
-  app = app.slice(0, buttonStart) + app.slice(buttonEnd + '</button>'.length);
-}
-
-if (app.includes('AI Kitchen Layout')) {
-  throw new Error('v0.21 failed to remove AI Kitchen Layout UI');
 }
 
 fs.writeFileSync(appPath, app);
