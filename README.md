@@ -4,11 +4,17 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.18.0**
+**v0.21.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.18.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.21.
 
-### v0.18 highlights
+### v0.21 highlights
+
+- Removes the unfinished AI Kitchen toolbar entry while preserving the stable kitchen tools already in the editor.
+- Adds Playwright Chrome smoke and initial editor-state tests locally and in CI.
+- Retains the v0.20 manual-ground-truth wall centerline fidelity tuning and all earlier detector improvements.
+
+### Wall detection highlights
 
 - Fixes the main bottleneck found in the Maricopa residential-plan test: short wall fragments were being discarded before classification.
 - Detects much shorter horizontal and vertical wall segments before trying to pair the two wall faces.
