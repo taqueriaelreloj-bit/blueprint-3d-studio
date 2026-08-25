@@ -41,12 +41,8 @@ if not exist node_modules (
   )
 )
 
-echo Clearing stale Vite dependency cache...
-if exist node_modules\.vite rmdir /s /q node_modules\.vite
-if exist node_modules\.vite-temp rmdir /s /q node_modules\.vite-temp
-
 echo.
-echo Checking production build for compile errors...
+echo Building Blueprint 3D Studio production bundle...
 call npm run build
 if errorlevel 1 (
   echo.
@@ -59,8 +55,8 @@ if errorlevel 1 (
 )
 
 echo.
-echo Build passed. Starting Blueprint 3D Studio v0.16.0...
-echo Vite dependency optimization is being rebuilt from scratch.
+echo Build passed. Starting stable production preview...
+echo This mode bypasses Vite dev dependency optimization and stale 504 errors.
 echo Keep this window open while using the application.
-call npm run dev -- --force --open
+call npm run preview -- --host 127.0.0.1 --port 5173 --strictPort --open
 pause
