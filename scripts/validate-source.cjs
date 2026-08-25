@@ -17,7 +17,7 @@ const app = fs.readFileSync(appPath, 'utf8');
 const css = fs.readFileSync(cssPath, 'utf8');
 
 const requiredAppMarkers = [
-  ['version', 'const APP_VERSION = "0.20.0";'],
+  ['version', 'const APP_VERSION = "0.21.0";'],
   ['all-line overlay state', 'showDetectedLines'],
   ['AI wall overlay data', 'walls: result.walls'],
   ['AI source trace overlay', 'ai-wall-trace'],
@@ -41,11 +41,14 @@ for (const [label, marker] of requiredAppMarkers) {
   if (!app.includes(marker)) fail(`${label} marker is missing.`);
 }
 
+if (app.includes('AI Kitchen Layout')) fail('AI Kitchen Layout is still present in the toolbar source.');
+
 if (!css.includes('v0.14.0 — pre-classification line-strengthening overlay')) fail('v0.14 detected-line overlay styles are missing.');
 if (!css.includes('v0.15.0 — sectional garage-door 3D rendering')) fail('v0.15 garage-door styles are missing.');
 if (!css.includes('v0.17.0 — residential plan wall recovery')) fail('v0.17 wall recovery marker is missing.');
 if (!css.includes('v0.19.0 — AI wall trace directly over source blueprint')) fail('v0.19 source wall trace styles are missing.');
 if (!css.includes('v0.20.0 — manual-ground-truth wall centerline fidelity')) fail('v0.20 wall fidelity marker is missing.');
+if (!css.includes('v0.21.0 — AI Kitchen Layout removed from toolbar')) fail('v0.21 AI Kitchen removal marker is missing.');
 
 const openingContinuityChecks = [
   'if (o.type === "window")',
@@ -57,6 +60,6 @@ for (const marker of openingContinuityChecks) {
   if (!app.includes(marker)) fail(`wall opening continuity marker missing: ${marker}`);
 }
 
-console.log('Blueprint 3D Studio v0.20.0 source validation PASSED.');
+console.log('Blueprint 3D Studio v0.21.0 source validation PASSED.');
 console.log(`App.jsx: ${app.length} characters`);
 console.log(`styles.css: ${css.length} characters`);
