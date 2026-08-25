@@ -24,11 +24,19 @@ jobs:
           node - <<'NODE'
           const fs = require('fs');
           const s = fs.readFileSync('src/App.jsx','utf8');
-          const needles = ['setWallAnalysis(result ?', 'possibleWalls', 'confidencePercent', 'wall-clear', 'wall-review', 'totalCandidates'];
+          const needles = [
+            'function analyzeBlueprintCanvas',
+            'const dark =',
+            'horizontal = dedupeDetectedLines',
+            'function detect',
+            'function scan',
+            'mergeCollinearLines',
+            'classifyWallCandidates'
+          ];
           for (const n of needles) {
             let i = s.indexOf(n);
             console.log('\n===== '+n+' @ '+i+' =====');
-            if (i >= 0) console.log(s.slice(Math.max(0,i-3500), Math.min(s.length,i+6500)));
+            if (i >= 0) console.log(s.slice(Math.max(0,i-5000), Math.min(s.length,i+10000)));
           }
           NODE
       - name: Validate source
