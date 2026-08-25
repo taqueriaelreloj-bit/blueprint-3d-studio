@@ -17,7 +17,8 @@ const app = fs.readFileSync(appPath, 'utf8');
 const css = fs.readFileSync(cssPath, 'utf8');
 
 const requiredAppMarkers = [
-  ['version', 'const APP_VERSION = "0.21.0";'],
+  ['version', 'const APP_VERSION = "0.22.0";'],
+  ['centralized history import', 'from "./projectHistory.js"'],
   ['all-line overlay state', 'showDetectedLines'],
   ['AI wall overlay data', 'walls: result.walls'],
   ['AI source trace overlay', 'ai-wall-trace'],
@@ -49,6 +50,7 @@ if (!css.includes('v0.17.0 — residential plan wall recovery')) fail('v0.17 wal
 if (!css.includes('v0.19.0 — AI wall trace directly over source blueprint')) fail('v0.19 source wall trace styles are missing.');
 if (!css.includes('v0.20.0 — manual-ground-truth wall centerline fidelity')) fail('v0.20 wall fidelity marker is missing.');
 if (!css.includes('v0.21.0 — AI Kitchen Layout removed from toolbar')) fail('v0.21 AI Kitchen removal marker is missing.');
+if (!css.includes('v0.22.0 — centralized project history module')) fail('v0.22 centralized history marker is missing.');
 
 const openingContinuityChecks = [
   'if (o.type === "window")',
@@ -60,6 +62,6 @@ for (const marker of openingContinuityChecks) {
   if (!app.includes(marker)) fail(`wall opening continuity marker missing: ${marker}`);
 }
 
-console.log('Blueprint 3D Studio v0.21.0 source validation PASSED.');
+console.log('Blueprint 3D Studio v0.22.0 source validation PASSED.');
 console.log(`App.jsx: ${app.length} characters`);
 console.log(`styles.css: ${css.length} characters`);

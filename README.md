@@ -4,9 +4,16 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.21.0**
+**v0.22.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.21.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.22.
+
+### v0.22 highlights
+
+- Extracts global Undo/Redo transitions into a reusable, tested project-history module.
+- Adds deterministic unit coverage for history ordering, limits and unavailable transitions.
+- Pins dependencies with a committed lockfile and updates PDF.js to a secure release.
+- Keeps the v0.21 toolbar cleanup and Chrome smoke coverage.
 
 ### v0.21 highlights
 
