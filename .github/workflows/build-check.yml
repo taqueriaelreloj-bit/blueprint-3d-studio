@@ -19,26 +19,6 @@ jobs:
         run: npm install
       - name: Restore source
         run: npm run restore
-      - name: Detector diagnostics
-        run: |
-          node - <<'NODE'
-          const fs = require('fs');
-          const s = fs.readFileSync('src/App.jsx','utf8');
-          const needles = [
-            'function analyzeBlueprintCanvas',
-            'const dark =',
-            'horizontal = dedupeDetectedLines',
-            'function detect',
-            'function scan',
-            'mergeCollinearLines',
-            'classifyWallCandidates'
-          ];
-          for (const n of needles) {
-            let i = s.indexOf(n);
-            console.log('\n===== '+n+' @ '+i+' =====');
-            if (i >= 0) console.log(s.slice(Math.max(0,i-5000), Math.min(s.length,i+10000)));
-          }
-          NODE
       - name: Validate source
         run: npm run validate
       - name: Build
