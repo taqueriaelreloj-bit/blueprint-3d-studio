@@ -43,3 +43,35 @@ test('pre-blueprint editor state is safe and intentional', async ({ page }) => {
 
   expect(pageErrors, `Page errors: ${pageErrors.join('\n')}`).toEqual([]);
 });
+
+test('global undo and redo restore a real project edit', async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureRuntimeErrors(page);
+  await page.goto('/');
+
+  const levelName = page.getByLabel('Level name');
+  const undo = page.getByRole('button', { name: /Undo/i });
+  const redo = page.getByRole('button', { name: /Redo/i });
+
+  await expect(levelName).toHaveValue('Level 1');
+  await expect(undo).toBeDisabled();
+  await levelName.fill('Main Floor');
+  await levelName.blur();
+  await expect(undo).toBeEnabled();
+
+  await undo.click();
+  await expect(levelName).toHaveValue('Level 1');
+  await expect(redo).toBeEnabled();
+
+  await redo.click();
+  await expect(levelName).toHaveValue('Main Floor');
+
+  await levelName.fill('Ground Floor');
+  await levelName.blur();
+  await page.locator('body').press('Control+z');
+  await expect(levelName).toHaveValue('Main Floor');
+  await page.locator('body').press('Control+Shift+z');
+  await expect(levelName).toHaveValue('Ground Floor');
+
+  expect(pageErrors, `Page errors: ${pageErrors.join('\n')}`).toEqual([]);
+  expect(consoleErrors, `Console errors: ${consoleErrors.join('\n')}`).toEqual([]);
+});
