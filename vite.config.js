@@ -10,10 +10,16 @@ export default defineConfig({
 
   optimizeDeps: {
     force: true,
-    // React Three packages were repeatedly returning Vite 504
-    // "Outdated Optimize Dep" responses in Chrome. Serve them directly
-    // instead of relying on a stale pre-bundled copy.
-    exclude: ["@react-three/drei", "@react-three/fiber", "three"],
+    // Prebundle the React Three stack together so CommonJS/ESM interop stays
+    // consistent. `use-sync-external-store/shim/with-selector` is CommonJS and
+    // must be wrapped by Vite for the default import used downstream.
+    include: [
+      "@react-three/drei",
+      "@react-three/fiber",
+      "three",
+      "use-sync-external-store/shim/with-selector",
+    ],
+    needsInterop: ["use-sync-external-store/shim/with-selector"],
   },
 
   server: {
