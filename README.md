@@ -4,20 +4,20 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.17.0**
+**v0.18.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.17.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.18.
 
-### v0.17 highlights
+### v0.18 highlights
 
-- Improves wall recovery on real residential floor plans with fragmented wall lines.
-- Lowers false rejection of connected double-line wall geometry near doors, fixtures and labels.
-- Keeps obvious measurement extensions and annotation geometry out of the structural model.
-- Uses a wider review band so uncertain walls remain editable instead of disappearing.
-- Recovers more incomplete exterior-perimeter evidence before wall consolidation.
-- Keeps the all-detected-lines overlay for comparison with the source blueprint.
-- Runs the stable production preview from `RUN.bat` instead of the Vite dev server.
-- Retains garage-door presets for 9 ft, 16 ft and 18 ft, continuous walls above openings, Undo/Redo, multi-level editing, kitchen layout, furnishing and 2D/3D views.
+- Fixes the main bottleneck found in the Maricopa residential-plan test: short wall fragments were being discarded before classification.
+- Detects much shorter horizontal and vertical wall segments before trying to pair the two wall faces.
+- Allows slightly thicker raster edge bands so scaled PDF walls are not rejected merely because of rendering thickness.
+- Uses a more tolerant parallel-edge overlap test for walls interrupted by doors, fixtures, labels and intersections.
+- Keeps the v0.17 structural classifier protections against obvious dimensions and annotation geometry.
+- Expands connected-wall recovery while retaining Review/Edit for uncertain geometry.
+- Runs restore, validation and a production build before `RUN.bat` launches the app.
+- Retains garage-door presets, continuous wall material above openings, Undo/Redo, multi-level editing, kitchen layout, furnishing and 2D/3D views.
 
 ## Windows quick start
 
@@ -49,6 +49,7 @@ npm run preview
 - `scripts/upgrade-v015.cjs` — sectional garage-door 3D upgrade
 - `scripts/upgrade-v016.cjs` — garage-size presets
 - `scripts/upgrade-v017.cjs` — residential wall recovery tuning
+- `scripts/upgrade-v018.cjs` — fine wall-segment detector tuning
 - `scripts/validate-source.cjs` — source integrity checks
 - `VERIFY.bat` — one-click source verification
 - `INSTALL.bat` — Windows setup
