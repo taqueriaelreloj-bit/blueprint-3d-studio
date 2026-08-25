@@ -41,6 +41,10 @@ if not exist node_modules (
   )
 )
 
+echo Clearing stale Vite dependency cache...
+if exist node_modules\.vite rmdir /s /q node_modules\.vite
+if exist node_modules\.vite-temp rmdir /s /q node_modules\.vite-temp
+
 echo.
 echo Checking production build for compile errors...
 call npm run build
@@ -56,6 +60,7 @@ if errorlevel 1 (
 
 echo.
 echo Build passed. Starting Blueprint 3D Studio v0.16.0...
+echo Vite dependency optimization is being rebuilt from scratch.
 echo Keep this window open while using the application.
-call npm run dev -- --open
+call npm run dev -- --force --open
 pause
