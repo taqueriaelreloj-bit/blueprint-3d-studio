@@ -20,6 +20,18 @@ jobs:
         run: npm install
       - name: Restore source
         run: npm run restore
+      - name: Detector diagnostics
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const s = fs.readFileSync('src/App.jsx','utf8');
+          const needles = ['setWallAnalysis(result ?', 'possibleWalls', 'confidencePercent', 'wall-clear', 'wall-review', 'totalCandidates'];
+          for (const n of needles) {
+            let i = s.indexOf(n);
+            console.log('\n===== '+n+' @ '+i+' =====');
+            if (i >= 0) console.log(s.slice(Math.max(0,i-3500), Math.min(s.length,i+6500)));
+          }
+          NODE
       - name: Validate source
         run: npm run validate
       - name: Build
