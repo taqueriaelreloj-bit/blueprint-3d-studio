@@ -39,8 +39,8 @@ app = replaceOnce(
 );
 app = replaceOnce(
   app,
-  '       (line.thicknessScore >= 0.58 &&',
-  '       (line.thicknessScore >= 0.50 &&',
+  '(line.thicknessScore >= 0.58 &&',
+  '(line.thicknessScore >= 0.50 &&',
   'automatic thickness threshold'
 );
 
