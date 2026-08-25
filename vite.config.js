@@ -6,7 +6,7 @@ export default defineConfig({
 
   // Keep Blueprint 3D Studio on its own Vite dependency cache so an older
   // dev-server session cannot leave stale optimized dependency URLs behind.
-  cacheDir: "node_modules/.vite-blueprint-v016",
+  cacheDir: "node_modules/.vite-blueprint-v017",
 
   optimizeDeps: {
     force: true,
