@@ -4,29 +4,29 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.16.0**
+**v0.17.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies the checked-in v0.14, v0.15 and v0.16 upgrades.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.17.
 
-### v0.16 highlights
+### v0.17 highlights
 
-- Detects and strengthens all blueprint lines before structural wall classification.
-- Keeps dimensions and annotations visible for review without converting them into 3D walls.
-- Adds garage-door presets for 9 ft, 16 ft and 18 ft openings.
-- Renders garage openings in 3D as sectional overhead doors.
-- Preserves continuous wall material above doors and windows.
-- Adds automatic source validation before install and launch.
-- Adds `VERIFY.bat` for one-click restore + validation without starting the app.
-- Keeps project-wide Undo/Redo, multi-level editing, AI wall classification, room furnishing, kitchen layout and 2D/3D views.
+- Improves wall recovery on real residential floor plans with fragmented wall lines.
+- Lowers false rejection of connected double-line wall geometry near doors, fixtures and labels.
+- Keeps obvious measurement extensions and annotation geometry out of the structural model.
+- Uses a wider review band so uncertain walls remain editable instead of disappearing.
+- Recovers more incomplete exterior-perimeter evidence before wall consolidation.
+- Keeps the all-detected-lines overlay for comparison with the source blueprint.
+- Runs the stable production preview from `RUN.bat` instead of the Vite dev server.
+- Retains garage-door presets for 9 ft, 16 ft and 18 ft, continuous walls above openings, Undo/Redo, multi-level editing, kitchen layout, furnishing and 2D/3D views.
 
 ## Windows quick start
 
 1. Install Node.js if it is not already installed.
-2. Double-click `VERIFY.bat` to confirm the recovered source is intact.
-3. Double-click `INSTALL.bat` once.
-4. Double-click `RUN.bat` whenever you want to launch Blueprint 3D Studio.
+2. In GitHub Desktop, select `blueprint-3d-studio` and Pull the latest `main` branch.
+3. Use **Repository → Show in Explorer**.
+4. Double-click `RUN.bat`.
 
-`RUN.bat` restores, upgrades and validates the canonical source before starting Vite.
+`RUN.bat` restores, upgrades, validates and builds the canonical source before launching the stable production preview.
 
 ## Development
 
@@ -34,13 +34,8 @@ The recovered v0.13 application source is preserved in `src/source/` as verified
 npm run restore
 npm run validate
 npm install
-npm run dev
-```
-
-Production build:
-
-```bash
 npm run build
+npm run preview
 ```
 
 ## Main files
@@ -53,6 +48,7 @@ npm run build
 - `scripts/upgrade-v014.cjs` — detected-line and garage catalog upgrade
 - `scripts/upgrade-v015.cjs` — sectional garage-door 3D upgrade
 - `scripts/upgrade-v016.cjs` — garage-size presets
+- `scripts/upgrade-v017.cjs` — residential wall recovery tuning
 - `scripts/validate-source.cjs` — source integrity checks
 - `VERIFY.bat` — one-click source verification
 - `INSTALL.bat` — Windows setup
