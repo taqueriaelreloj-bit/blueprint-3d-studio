@@ -17,7 +17,7 @@ const app = fs.readFileSync(appPath, 'utf8');
 const css = fs.readFileSync(cssPath, 'utf8');
 
 const requiredAppMarkers = [
-  ['version', 'const APP_VERSION = "0.17.0";'],
+  ['version', 'const APP_VERSION = "0.18.0";'],
   ['all-line overlay state', 'showDetectedLines'],
   ['9 ft garage door', 'garage-door-9'],
   ['16 ft garage door', 'garage-door-16'],
@@ -26,7 +26,8 @@ const requiredAppMarkers = [
   ['global undo', 'function undo()'],
   ['global redo', 'function redo()'],
   ['3D wall opening continuity', 'key: `above-${o.id}`'],
-  ['v0.17 automatic threshold', 'line.confidence >= 0.58 ||'],
+  ['v0.18 fine segment threshold', 'Math.max(18, Math.round(Math.min(width, height) * 0.020))'],
+  ['v0.18 automatic threshold', 'line.confidence >= 0.50 ||'],
   ['v0.17 clear threshold', 'const classification = confidence >= 0.88'],
   ['v0.17 possible threshold', 'confidence >= 0.36'],
 ];
@@ -55,6 +56,6 @@ for (const marker of openingContinuityChecks) {
   if (!app.includes(marker)) fail(`wall opening continuity marker missing: ${marker}`);
 }
 
-console.log('Blueprint 3D Studio v0.17.0 source validation PASSED.');
+console.log('Blueprint 3D Studio v0.18.0 source validation PASSED.');
 console.log(`App.jsx: ${app.length} characters`);
 console.log(`styles.css: ${css.length} characters`);
