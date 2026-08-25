@@ -41,7 +41,21 @@ if not exist node_modules (
   )
 )
 
-echo Starting Blueprint 3D Studio v0.16.0...
+echo.
+echo Checking production build for compile errors...
+call npm run build
+if errorlevel 1 (
+  echo.
+  echo ============================================================
+  echo BUILD FAILED - DO NOT CLOSE THIS WINDOW
+  echo Take a screenshot of the FIRST red/error lines above and send it.
+  echo ============================================================
+  pause
+  exit /b 1
+)
+
+echo.
+echo Build passed. Starting Blueprint 3D Studio v0.16.0...
 echo Keep this window open while using the application.
 call npm run dev -- --open
 pause
