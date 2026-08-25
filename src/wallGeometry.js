@@ -19,7 +19,7 @@ export function nearestPointOnSegment(point, start, end) {
 }
 
 export function projectOpening(opening, wall) {
-  const t = Math.max(0, Math.min(1, Number(opening?.t) || 0));
+  const t = Math.max(0, Math.min(1, Number(opening?.t ?? 0.5)));
   return {
     x: wall.a.x + (wall.b.x - wall.a.x) * t,
     y: wall.a.y + (wall.b.y - wall.a.y) * t,
@@ -49,6 +49,8 @@ export function wallOpeningsRemainValid(wall, openings, pxPerFt, defaultWallHeig
 
   for (const opening of related) {
     if (!Number.isFinite(opening.widthFt) || opening.widthFt <= 0 || wallFt <= opening.widthFt + 0.1) return false;
+    const interval = openingIntervalFt(opening, wall, pxPerFt);
+    if (!interval || interval.startFt < -0.001 || interval.endFt > wallFt + 0.001) return false;
     const height = Math.max(0, Number(opening.heightFt) || 0);
     if (opening.type === "window") {
       const sill = Math.max(0, Number(opening.sillFt) || 0);

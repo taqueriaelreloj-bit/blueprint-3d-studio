@@ -31,6 +31,8 @@ test("nearest point projection clamps to the wall segment", () => {
 test("opening projection and intervals follow the host wall", () => {
   const opening = { t: 0.4, widthFt: 3 };
   assert.deepEqual(projectOpening(opening, wall), { x: 40, y: 0 });
+  assert.deepEqual(projectOpening({}, wall), { x: 50, y: 0 });
+  assert.deepEqual(projectOpening({ t: 2 }, wall), { x: 100, y: 0 });
   assert.deepEqual(openingIntervalFt(opening, wall, 10), { startFt: 2.5, endFt: 5.5 });
 });
 
@@ -47,6 +49,7 @@ test("wall opening validation protects width, height, sill and overlap", () => {
   const window = { id: "window", wallId: wall.id, type: "window", t: 0.75, widthFt: 3, heightFt: 4, sillFt: 3 };
   assert.equal(wallOpeningsRemainValid(wall, [door, window], 10, 9), true);
   assert.equal(wallOpeningsRemainValid(wall, [{ ...door, widthFt: 10 }], 10, 9), false);
+  assert.equal(wallOpeningsRemainValid(wall, [{ ...door, t: 0.05 }], 10, 9), false);
   assert.equal(wallOpeningsRemainValid(wall, [{ ...door, heightFt: 10 }], 10, 9), false);
   assert.equal(wallOpeningsRemainValid(wall, [{ ...window, sillFt: 6 }], 10, 9), false);
   assert.equal(wallOpeningsRemainValid(wall, [door, { ...window, t: 0.3 }], 10, 9), false);
