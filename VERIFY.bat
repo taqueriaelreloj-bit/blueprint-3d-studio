@@ -1,5 +1,5 @@
 @echo off
-title Blueprint 3D Studio v0.22.0 - Verify
+title Blueprint 3D Studio v0.23.0 - Verify
 cd /d "%~dp0"
 
 where node >nul 2>nul
@@ -28,6 +28,6 @@ if errorlevel 1 (
 
 echo.
 echo =====================================================
-echo Blueprint 3D Studio v0.22.0 verification PASSED.
+echo Blueprint 3D Studio v0.23.0 verification PASSED.
 echo =====================================================
 pause

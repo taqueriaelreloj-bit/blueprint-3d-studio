@@ -4,9 +4,15 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.22.0**
+**v0.23.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.22.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.23.
+
+### v0.23 highlights
+
+- Extracts wall and opening geometry into a reusable engine module.
+- Adds unit coverage for calibrated lengths, projections, snapping, overlaps and vertical opening constraints.
+- Splits PDF.js and the React Three stack into cacheable production chunks.
 
 ### v0.22 highlights
 

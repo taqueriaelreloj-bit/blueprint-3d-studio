@@ -22,6 +22,24 @@ export default defineConfig({
     needsInterop: ["use-sync-external-store/shim/with-selector"],
   },
 
+  build: {
+    // Three.js is intentionally isolated for long-term browser caching. Its
+    // minified vendor chunk is ~913 kB (~247 kB gzip), so warn only if it
+    // grows beyond the expected 1 MB boundary.
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return undefined;
+          if (id.includes("pdfjs-dist")) return "pdf";
+          if (id.includes("@react-three") || id.includes("/three/")) return "three";
+          if (id.includes("/react/") || id.includes("/react-dom/")) return "react";
+          return undefined;
+        },
+      },
+    },
+  },
+
   server: {
     headers: {
       "Cache-Control": "no-store, no-cache, must-revalidate",
