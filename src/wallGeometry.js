@@ -143,3 +143,34 @@ export function splitWallAtT(wall, openings = [], pxPerFt, splitT = 0.5, createI
   });
   return { walls: [first, second], openings: updatedOpenings, splitPoint };
 }
+
+export function mergeConnectedCollinearWalls(primary, secondary, openings = [], pxPerFt, tolerancePx = 1) {
+  if (!primary || !secondary || !pxPerFt || primary.id === secondary.id) return null;
+  const endpointPairs = [
+    ["a", "a"], ["a", "b"], ["b", "a"], ["b", "b"],
+  ];
+  const shared = endpointPairs.find(([firstEnd, secondEnd]) => distance(primary[firstEnd], secondary[secondEnd]) <= tolerancePx);
+  if (!shared) return null;
+  const [primaryShared, secondaryShared] = shared;
+  const primaryOuter = primary[primaryShared === "a" ? "b" : "a"];
+  const secondaryOuter = secondary[secondaryShared === "a" ? "b" : "a"];
+  const firstVector = { x: primaryOuter.x - primary[primaryShared].x, y: primaryOuter.y - primary[primaryShared].y };
+  const secondVector = { x: secondaryOuter.x - secondary[secondaryShared].x, y: secondaryOuter.y - secondary[secondaryShared].y };
+  const firstLength = Math.hypot(firstVector.x, firstVector.y);
+  const secondLength = Math.hypot(secondVector.x, secondVector.y);
+  if (!firstLength || !secondLength) return null;
+  const crossRatio = Math.abs(firstVector.x * secondVector.y - firstVector.y * secondVector.x) / (firstLength * secondLength);
+  const dot = firstVector.x * secondVector.x + firstVector.y * secondVector.y;
+  if (crossRatio > 0.01 || dot >= 0) return null;
+
+  const merged = { ...primary, a: { ...primaryOuter }, b: { ...secondaryOuter } };
+  const updatedOpenings = openings.map((opening) => {
+    const host = opening.wallId === primary.id ? primary : opening.wallId === secondary.id ? secondary : null;
+    if (!host) return opening;
+    const physicalPoint = projectOpening(opening, host);
+    const projection = nearestPointOnSegment(physicalPoint, merged.a, merged.b);
+    return { ...opening, wallId: merged.id, t: projection.t };
+  });
+  if (!wallOpeningsRemainValid(merged, updatedOpenings, pxPerFt, merged.heightFt || 9)) return null;
+  return { wall: merged, openings: updatedOpenings, removedWallId: secondary.id };
+}

@@ -6,6 +6,7 @@ import {
   openingIntervalFt,
   openingClearancesFt,
   openingReservationPx,
+  mergeConnectedCollinearWalls,
   openingsOverlapOnWall,
   projectOpening,
   resizeWallFromStart,
@@ -64,6 +65,29 @@ test("wall splitting keeps endpoints connected and rehosts openings", () => {
 test("wall splitting refuses to cut through a hosted opening", () => {
   const crossing = { id: "door", wallId: wall.id, t: 0.5, widthFt: 3 };
   assert.equal(splitWallAtT(wall, [crossing], 10, 0.5), null);
+});
+
+test("connected collinear walls merge and preserve opening positions", () => {
+  const left = { id: "left", a: { x: 0, y: 0 }, b: { x: 50, y: 0 }, heightFt: 9 };
+  const right = { id: "right", a: { x: 50, y: 0 }, b: { x: 100, y: 0 }, heightFt: 9 };
+  const openings = [
+    { id: "door", wallId: "left", t: 0.5, widthFt: 2, heightFt: 7, type: "door" },
+    { id: "window", wallId: "right", t: 0.5, widthFt: 2, heightFt: 4, sillFt: 3, type: "window" },
+  ];
+  const result = mergeConnectedCollinearWalls(left, right, openings, 10);
+  assert.deepEqual(result.wall.a, { x: 0, y: 0 });
+  assert.deepEqual(result.wall.b, { x: 100, y: 0 });
+  assert.equal(result.openings[0].t, 0.25);
+  assert.equal(result.openings[1].t, 0.75);
+  assert.equal(result.openings[1].wallId, "left");
+});
+
+test("wall merge rejects corners and disconnected segments", () => {
+  const horizontal = { id: "h", a: { x: 0, y: 0 }, b: { x: 50, y: 0 } };
+  const corner = { id: "v", a: { x: 50, y: 0 }, b: { x: 50, y: 50 } };
+  const detached = { id: "d", a: { x: 60, y: 0 }, b: { x: 100, y: 0 } };
+  assert.equal(mergeConnectedCollinearWalls(horizontal, corner, [], 10), null);
+  assert.equal(mergeConnectedCollinearWalls(horizontal, detached, [], 10), null);
 });
 
 test("opening reservations keep snapped cabinets clear of doors and windows", () => {

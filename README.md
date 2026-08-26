@@ -4,9 +4,15 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.28.0**
+**v0.29.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.28.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.29.
+
+### v0.29 highlights
+
+- Joins connected collinear wall segments while preserving real-world geometry.
+- Rejects corners, gaps and ambiguous joins instead of damaging room closure.
+- Reprojects hosted openings and wall-snapped objects without moving them physically.
 
 ### v0.28 highlights
 
