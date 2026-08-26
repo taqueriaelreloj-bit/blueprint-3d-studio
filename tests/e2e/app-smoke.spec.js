@@ -16,8 +16,8 @@ test('Blueprint 3D Studio opens cleanly in Chrome', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.getByText('Blueprint 3D Studio', { exact: false }).first()).toBeVisible();
-  await expect(page.getByText('Upload Blueprint PDF', { exact: false }).first()).toBeVisible();
-  await expect(page.getByRole('button', { name: /AI Auto Build/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /New Design/i })).toBeVisible();
+  await expect(page.getByText('Import / Scan', { exact: false }).first()).toBeVisible();
   await expect(page.getByRole('button', { name: /Review \/ Edit/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Draw Missing Walls/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /^Door$/i })).toBeVisible();
@@ -30,16 +30,20 @@ test('Blueprint 3D Studio opens cleanly in Chrome', async ({ page }) => {
   expect(consoleErrors, `Console errors: ${consoleErrors.join('\n')}`).toEqual([]);
 });
 
-test('pre-blueprint editor state is safe and intentional', async ({ page }) => {
+test('design-first editor starts blank without requiring a blueprint', async ({ page }) => {
   const { pageErrors } = captureRuntimeErrors(page);
 
   await page.goto('/');
 
-  await expect(page.getByText('Blueprint / 2D Editor', { exact: false })).toBeVisible();
+  await expect(page.getByText('2D Design Editor', { exact: false })).toBeVisible();
   await expect(page.getByRole('button', { name: /Review \/ Edit/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /Draw Missing Walls/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /^Door$/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /^Window$/i })).toBeDisabled();
+
+  await page.getByRole('button', { name: /Create Blank Design/i }).click();
+  await expect(page.getByText('Blank design canvas', { exact: false })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Stop Walls/i })).toBeEnabled();
 
   expect(pageErrors, `Page errors: ${pageErrors.join('\n')}`).toEqual([]);
 });

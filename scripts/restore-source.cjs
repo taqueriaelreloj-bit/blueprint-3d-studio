@@ -45,6 +45,7 @@ try {
   require('./upgrade-v023.cjs');
   require('./upgrade-v024.cjs');
   require('./upgrade-v025.cjs');
+  require('./upgrade-v026.cjs');
   console.log('Blueprint 3D Studio source restoration complete.');
 } catch (error) {
   console.error('SOURCE RESTORE FAILED:', error.message);

@@ -4,9 +4,15 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.25.0**
+**v0.26.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.25.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.26.
+
+### v0.26 highlights
+
+- Makes blank design the primary entry point with an immediately usable scaled 2D canvas.
+- Moves blueprint PDF import and AI scanning into an optional `Import / Scan` submenu.
+- Keeps the complete blueprint recognition workflow available without blocking manual design.
 
 ### v0.25 highlights
 
