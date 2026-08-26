@@ -48,6 +48,27 @@ test('design-first editor starts blank without requiring a blueprint', async ({ 
   expect(pageErrors, `Page errors: ${pageErrors.join('\n')}`).toEqual([]);
 });
 
+test('Create Room draws a closed rectangular perimeter on the shared 2D/3D model', async ({ page }) => {
+  const { consoleErrors, pageErrors } = captureRuntimeErrors(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /Create Blank Design/i }).click();
+  await page.getByRole('button', { name: /Rectangle Room/i }).click();
+
+  const editor = page.locator('svg.drawing-overlay');
+  const box = await editor.boundingBox();
+  expect(box).not.toBeNull();
+  await page.mouse.move(box.x + 180, box.y + 160);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 500, box.y + 380, { steps: 8 });
+  await page.mouse.up();
+
+  await expect(editor.locator('line.wall')).toHaveCount(4);
+  await expect(page.getByText(/Room created with 4 new walls/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Undo/i })).toBeEnabled();
+  expect(pageErrors, `Page errors: ${pageErrors.join('\n')}`).toEqual([]);
+  expect(consoleErrors, `Console errors: ${consoleErrors.join('\n')}`).toEqual([]);
+});
+
 test('global undo and redo restore a real project edit', async ({ page }) => {
   const { consoleErrors, pageErrors } = captureRuntimeErrors(page);
   await page.goto('/');

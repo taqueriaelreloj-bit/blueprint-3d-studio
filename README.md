@@ -4,9 +4,15 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.26.0**
+**v0.27.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.26.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.27.
+
+### v0.27 highlights
+
+- Adds rectangular click-drag and point-by-point polygon `Create Room` tools.
+- Closes room perimeters automatically and shows live dimensions while drawing.
+- Reuses exact shared walls instead of creating duplicate walls between adjacent rooms.
 
 ### v0.26 highlights
 
