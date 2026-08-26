@@ -9,6 +9,7 @@ import {
   openingsOverlapOnWall,
   projectOpening,
   resizeWallFromStart,
+  splitWallAtT,
   wallLengthFt,
   wallOpeningsRemainValid,
   wallVector,
@@ -46,6 +47,23 @@ test("parametric wall resizing preserves the start point and direction", () => {
   assert.deepEqual(resized.a, diagonal.a);
   assert.ok(Math.abs(distance(resized.a, resized.b) - 100) < 1e-9);
   assert.equal(resizeWallFromStart(wall, 0, 10), null);
+});
+
+test("wall splitting keeps endpoints connected and rehosts openings", () => {
+  let id = 0;
+  const door = { id: "door", wallId: wall.id, t: 0.2, widthFt: 2 };
+  const window = { id: "window", wallId: wall.id, t: 0.8, widthFt: 2 };
+  const result = splitWallAtT(wall, [door, window], 10, 0.5, () => `split-${++id}`);
+  assert.deepEqual(result.walls[0].b, result.walls[1].a);
+  assert.equal(result.openings[0].wallId, "split-1");
+  assert.equal(result.openings[0].t, 0.4);
+  assert.equal(result.openings[1].wallId, "split-2");
+  assert.ok(Math.abs(result.openings[1].t - 0.6) < 1e-9);
+});
+
+test("wall splitting refuses to cut through a hosted opening", () => {
+  const crossing = { id: "door", wallId: wall.id, t: 0.5, widthFt: 3 };
+  assert.equal(splitWallAtT(wall, [crossing], 10, 0.5), null);
 });
 
 test("opening reservations keep snapped cabinets clear of doors and windows", () => {

@@ -120,3 +120,26 @@ export function resizeWallFromStart(wall, lengthFt, pxPerFt) {
   const lengthPx = lengthFt * pxPerFt;
   return { ...wall, b: { x: wall.a.x + vector.ux * lengthPx, y: wall.a.y + vector.uy * lengthPx } };
 }
+
+export function splitWallAtT(wall, openings = [], pxPerFt, splitT = 0.5, createId = () => crypto.randomUUID()) {
+  if (!wall || !pxPerFt || !Number.isFinite(splitT) || splitT <= 0.01 || splitT >= 0.99) return null;
+  const hosted = openings.filter((opening) => opening.wallId === wall.id);
+  const lengthFt = wallLengthFt(wall, pxPerFt);
+  if (!lengthFt) return null;
+  for (const opening of hosted) {
+    const halfT = Math.max(0, Number(opening.widthFt) || 0) / 2 / lengthFt;
+    if (opening.t - halfT < splitT && opening.t + halfT > splitT) return null;
+  }
+  const splitPoint = {
+    x: wall.a.x + (wall.b.x - wall.a.x) * splitT,
+    y: wall.a.y + (wall.b.y - wall.a.y) * splitT,
+  };
+  const first = { ...wall, id: createId(), b: splitPoint };
+  const second = { ...wall, id: createId(), a: splitPoint };
+  const updatedOpenings = openings.map((opening) => {
+    if (opening.wallId !== wall.id) return opening;
+    if (opening.t < splitT) return { ...opening, wallId: first.id, t: opening.t / splitT };
+    return { ...opening, wallId: second.id, t: (opening.t - splitT) / (1 - splitT) };
+  });
+  return { walls: [first, second], openings: updatedOpenings, splitPoint };
+}

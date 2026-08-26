@@ -4,9 +4,15 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.27.0**
+**v0.28.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.27.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.28.
+
+### v0.28 highlights
+
+- Divides a selected wall into two exactly connected wall segments.
+- Prevents cuts through doors/windows and rehosts openings on the correct new segment.
+- Keeps wall-snapped cabinets and appliances attached after a division.
 
 ### v0.27 highlights
 
