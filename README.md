@@ -4,9 +4,14 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.23.0**
+**v0.24.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.23.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.24.
+
+### v0.24 highlights
+
+- Reserves door and window spans during Smart Cabinet Snap.
+- Keeps wall-aligned cabinet runs clear of architectural openings with tested clearance geometry.
 
 ### v0.23 highlights
 

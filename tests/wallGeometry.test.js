@@ -4,6 +4,7 @@ import {
   distance,
   nearestPointOnSegment,
   openingIntervalFt,
+  openingReservationPx,
   openingsOverlapOnWall,
   projectOpening,
   wallLengthFt,
@@ -34,6 +35,14 @@ test("opening projection and intervals follow the host wall", () => {
   assert.deepEqual(projectOpening({}, wall), { x: 50, y: 0 });
   assert.deepEqual(projectOpening({ t: 2 }, wall), { x: 100, y: 0 });
   assert.deepEqual(openingIntervalFt(opening, wall, 10), { startFt: 2.5, endFt: 5.5 });
+});
+
+test("opening reservations keep snapped cabinets clear of doors and windows", () => {
+  const centered = openingReservationPx({ t: 0.5, widthFt: 3 }, wall, 10);
+  assert.equal(centered.center, 50);
+  assert.ok(Math.abs(centered.width - 32) < 1e-9);
+  assert.deepEqual(openingReservationPx({ t: 0.05, widthFt: 2 }, wall, 10), { center: 8, width: 16 });
+  assert.equal(openingReservationPx(null, wall, 10), null);
 });
 
 test("opening collision detection includes required clearance", () => {

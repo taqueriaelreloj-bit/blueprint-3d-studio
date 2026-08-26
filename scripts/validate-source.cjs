@@ -17,9 +17,10 @@ const app = fs.readFileSync(appPath, 'utf8');
 const css = fs.readFileSync(cssPath, 'utf8');
 
 const requiredAppMarkers = [
-  ['version', 'const APP_VERSION = "0.23.0";'],
+  ['version', 'const APP_VERSION = "0.24.0";'],
   ['centralized history import', 'from "./projectHistory.js"'],
   ['tested wall geometry import', 'from "./wallGeometry.js"'],
+  ['opening-aware cabinet snap', 'openingReservationPx(opening, wall, pxPerFt)'],
   ['all-line overlay state', 'showDetectedLines'],
   ['AI wall overlay data', 'walls: result.walls'],
   ['AI source trace overlay', 'ai-wall-trace'],
@@ -64,6 +65,6 @@ for (const marker of openingContinuityChecks) {
   if (!app.includes(marker)) fail(`wall opening continuity marker missing: ${marker}`);
 }
 
-console.log('Blueprint 3D Studio v0.23.0 source validation PASSED.');
+console.log('Blueprint 3D Studio v0.24.0 source validation PASSED.');
 console.log(`App.jsx: ${app.length} characters`);
 console.log(`styles.css: ${css.length} characters`);

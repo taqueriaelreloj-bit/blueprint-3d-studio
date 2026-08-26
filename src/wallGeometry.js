@@ -34,6 +34,18 @@ export function openingIntervalFt(opening, wall, pxPerFt) {
   return { startFt: centerFt - halfWidthFt, endFt: centerFt + halfWidthFt };
 }
 
+export function openingReservationPx(opening, wall, pxPerFt, clearanceFt = 0.1) {
+  const interval = openingIntervalFt(opening, wall, pxPerFt);
+  if (!interval) return null;
+  const startFt = Math.max(0, interval.startFt - Math.max(0, clearanceFt));
+  const endFt = Math.min(wallLengthFt(wall, pxPerFt), interval.endFt + Math.max(0, clearanceFt));
+  if (endFt <= startFt) return null;
+  return {
+    center: ((startFt + endFt) / 2) * pxPerFt,
+    width: (endFt - startFt) * pxPerFt,
+  };
+}
+
 export function openingsOverlapOnWall(candidate, existing, wall, pxPerFt, clearanceFt = 0.05) {
   const a = openingIntervalFt(candidate, wall, pxPerFt);
   const b = openingIntervalFt(existing, wall, pxPerFt);
