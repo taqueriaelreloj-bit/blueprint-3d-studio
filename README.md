@@ -4,9 +4,15 @@ Main application repository for Blueprint 3D Studio.
 
 ## Current version
 
-**v0.24.0**
+**v0.25.0**
 
-The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.24.
+The recovered v0.13 application source is preserved in `src/source/` as verified Brotli/Base64 chunks. `scripts/restore-source.cjs` reconstructs `src/App.jsx` and `src/styles.css`, then automatically applies all checked-in upgrades through v0.25.
+
+### v0.25 highlights
+
+- Adds exact numeric wall-length editing while preserving wall direction.
+- Rejects wall-length changes that would invalidate hosted doors or windows.
+- Shows live left/right clearance dimensions from a selected opening to the nearest wall end, opening or snapped object.
 
 ### v0.24 highlights
 

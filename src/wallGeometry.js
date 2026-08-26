@@ -46,6 +46,33 @@ export function openingReservationPx(opening, wall, pxPerFt, clearanceFt = 0.1) 
   };
 }
 
+export function openingClearancesFt(opening, wall, pxPerFt, obstacles = []) {
+  const interval = openingIntervalFt(opening, wall, pxPerFt);
+  if (!interval) return null;
+  const wallFt = wallLengthFt(wall, pxPerFt);
+  let leftBoundary = 0;
+  let rightBoundary = wallFt;
+  let leftKind = "wall end";
+  let rightKind = "wall end";
+  for (const obstacle of obstacles) {
+    if (!Number.isFinite(obstacle?.startFt) || !Number.isFinite(obstacle?.endFt)) continue;
+    if (obstacle.endFt <= interval.startFt && obstacle.endFt > leftBoundary) {
+      leftBoundary = obstacle.endFt;
+      leftKind = obstacle.kind || "object";
+    }
+    if (obstacle.startFt >= interval.endFt && obstacle.startFt < rightBoundary) {
+      rightBoundary = obstacle.startFt;
+      rightKind = obstacle.kind || "object";
+    }
+  }
+  return {
+    leftFt: Math.max(0, interval.startFt - leftBoundary),
+    rightFt: Math.max(0, rightBoundary - interval.endFt),
+    leftKind,
+    rightKind,
+  };
+}
+
 export function openingsOverlapOnWall(candidate, existing, wall, pxPerFt, clearanceFt = 0.05) {
   const a = openingIntervalFt(candidate, wall, pxPerFt);
   const b = openingIntervalFt(existing, wall, pxPerFt);
@@ -85,4 +112,11 @@ export function wallVector(wall) {
   const dy = wall.b.y - wall.a.y;
   const len = Math.hypot(dx, dy) || 1;
   return { dx, dy, len, ux: dx / len, uy: dy / len };
+}
+
+export function resizeWallFromStart(wall, lengthFt, pxPerFt) {
+  if (!wall || !Number.isFinite(lengthFt) || lengthFt <= 0 || !pxPerFt) return null;
+  const vector = wallVector(wall);
+  const lengthPx = lengthFt * pxPerFt;
+  return { ...wall, b: { x: wall.a.x + vector.ux * lengthPx, y: wall.a.y + vector.uy * lengthPx } };
 }

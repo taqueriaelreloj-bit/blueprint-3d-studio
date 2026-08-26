@@ -4,9 +4,11 @@ import {
   distance,
   nearestPointOnSegment,
   openingIntervalFt,
+  openingClearancesFt,
   openingReservationPx,
   openingsOverlapOnWall,
   projectOpening,
+  resizeWallFromStart,
   wallLengthFt,
   wallOpeningsRemainValid,
   wallVector,
@@ -37,12 +39,32 @@ test("opening projection and intervals follow the host wall", () => {
   assert.deepEqual(openingIntervalFt(opening, wall, 10), { startFt: 2.5, endFt: 5.5 });
 });
 
+test("parametric wall resizing preserves the start point and direction", () => {
+  assert.deepEqual(resizeWallFromStart(wall, 15, 10), { ...wall, b: { x: 150, y: 0 } });
+  const diagonal = { id: "diagonal", a: { x: 10, y: 20 }, b: { x: 40, y: 60 } };
+  const resized = resizeWallFromStart(diagonal, 10, 10);
+  assert.deepEqual(resized.a, diagonal.a);
+  assert.ok(Math.abs(distance(resized.a, resized.b) - 100) < 1e-9);
+  assert.equal(resizeWallFromStart(wall, 0, 10), null);
+});
+
 test("opening reservations keep snapped cabinets clear of doors and windows", () => {
   const centered = openingReservationPx({ t: 0.5, widthFt: 3 }, wall, 10);
   assert.equal(centered.center, 50);
   assert.ok(Math.abs(centered.width - 32) < 1e-9);
   assert.deepEqual(openingReservationPx({ t: 0.05, widthFt: 2 }, wall, 10), { center: 8, width: 16 });
   assert.equal(openingReservationPx(null, wall, 10), null);
+});
+
+test("opening clearances measure to the nearest wall end or neighboring feature", () => {
+  const opening = { t: 0.5, widthFt: 2 };
+  assert.deepEqual(openingClearancesFt(opening, wall, 10), {
+    leftFt: 4, rightFt: 4, leftKind: "wall end", rightKind: "wall end",
+  });
+  assert.deepEqual(openingClearancesFt(opening, wall, 10, [
+    { startFt: 1, endFt: 3.5, kind: "cabinet" },
+    { startFt: 7, endFt: 8, kind: "window" },
+  ]), { leftFt: 0.5, rightFt: 1, leftKind: "cabinet", rightKind: "window" });
 });
 
 test("opening collision detection includes required clearance", () => {
